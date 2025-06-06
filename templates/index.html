@@ -52,6 +52,15 @@
             color: red;
             margin-top: 10px;
         }
+        .debug {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -70,12 +79,28 @@
         <?php if (isset($qrCode)): ?>
             <div class="qr-code">
                 <h2>Your QR Code:</h2>
-                <img src="<?php echo $qrCode; ?>" alt="QR Code">
+                <?php if (!empty($qrCode)): ?>
+                    <img src="<?php echo htmlspecialchars($qrCode); ?>" alt="QR Code">
+                    <div class="debug">
+                        QR Code data URI length: <?php echo strlen($qrCode); ?><br>
+                        QR Code data URI starts with: <?php echo htmlspecialchars(substr($qrCode, 0, 50)) . '...'; ?>
+                    </div>
+                <?php else: ?>
+                    <p>QR Code generation failed - empty result</p>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
         <?php if (isset($error)): ?>
             <div class="error"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($_POST['text'])): ?>
+            <div class="debug">
+                <h3>Debug Information:</h3>
+                <p>POST data received: <?php echo htmlspecialchars(print_r($_POST, true)); ?></p>
+                <p>QR Code variable is <?php echo isset($qrCode) ? 'set' : 'not set'; ?></p>
+            </div>
         <?php endif; ?>
     </div>
 </body>
