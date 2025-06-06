@@ -3,6 +3,7 @@ Options -Indexes
 
 # Handle front controller pattern
 RewriteEngine On
+RewriteBase /qrgenerator/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [L]
@@ -20,7 +21,7 @@ RewriteRule ^ index.php [L]
 <IfModule mod_php8.c>
     php_value display_errors Off
     php_value log_errors On
-    php_value error_log /path/to/error.log
+    php_value error_log /www/logs/error.log
 </IfModule>
 
 # Enable compression
