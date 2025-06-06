@@ -4,6 +4,9 @@ namespace QrGenerator;
 
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 
 class QrGenerator
 {
@@ -18,9 +21,13 @@ class QrGenerator
 
     public function generate(string $text): string
     {
-        $qrCode = QrCode::create($text)
-            ->setSize($this->size)
-            ->setMargin($this->margin);
+        $qrCode = new QrCode($text);
+        $qrCode->setSize($this->size);
+        $qrCode->setMargin($this->margin);
+        $qrCode->setForegroundColor(new Color(0, 0, 0));
+        $qrCode->setBackgroundColor(new Color(255, 255, 255));
+        $qrCode->setEncoding(new Encoding('UTF-8'));
+        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevelHigh());
 
         $writer = new PngWriter();
         $result = $writer->write($qrCode);
