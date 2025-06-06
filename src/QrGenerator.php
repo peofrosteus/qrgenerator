@@ -21,13 +21,13 @@ class QrGenerator
 
     public function generate(string $text): string
     {
-        $qrCode = new QrCode($text);
-        $qrCode->setSize($this->size);
-        $qrCode->setMargin($this->margin);
-        $qrCode->setForegroundColor(new Color(0, 0, 0));
-        $qrCode->setBackgroundColor(new Color(255, 255, 255));
-        $qrCode->setEncoding(new Encoding('UTF-8'));
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevelHigh());
+        $qrCode = QrCode::create($text)
+            ->setSize($this->size)
+            ->setMargin($this->margin)
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255))
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelHigh());
 
         $writer = new PngWriter();
         $result = $writer->write($qrCode);
